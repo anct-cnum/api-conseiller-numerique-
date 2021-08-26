@@ -28,6 +28,7 @@ module.exports = {
       db.collection('misesEnRelation').createIndex({ 'structure.$id': 1 }),
       db.collection('misesEnRelation').createIndex({ 'structure.oid': 1 }),
       db.collection('misesEnRelation').createIndex({ 'conseiller.$id': 1 }),
+      db.collection('misesEnRelation').createIndex({ 'conseillerObj.email': 1 }),
       db.collection('misesEnRelation').createIndex({
         'conseillerObj.nom': 'text',
         'conseillerObj.prenom': 'text',
@@ -50,6 +51,7 @@ module.exports = {
       db.collection('conseillers').createIndex({ 'statut': 1 }),
       db.collection('conseillers').createIndex({ 'userCreated': 1 }),
       db.collection('conseillers').createIndex({ 'userCreationError': 1 }),
+      db.collection('conseillers').createIndex({ 'email': 1 }),
     ]);
   },
   cras: db => {
