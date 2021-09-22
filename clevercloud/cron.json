@@ -1,13 +1,4 @@
 [
-  "0 * * * * $ROOT/src/tools/jobs/migrate-pg-to-mongo.sh",
-  "30 0 * * * $ROOT/src/tools/jobs/mises-en-relation.sh",
-  "*/1 * * * * $ROOT/src/tools/jobs/send-email-prefets.sh",
-  "*/5 * * * * $ROOT/src/tools/jobs/create-account-structures.sh",
-  "*/5 * * * * $ROOT/src/tools/jobs/send-email-structures.sh",
-  "0 4 * * * $ROOT/src/tools/jobs/update-disponibilite-sondage.sh",
-  "0 5 * * * $ROOT/src/tools/jobs/metabase.sh",
-  "0 0 * * * $ROOT/src/tools/jobs/stats-daily-cras.sh",
-  "0 3 1 * * $ROOT/src/tools/jobs/stats-monthly-cras.sh",
-  "0 6 * * * $ROOT/src/tools/jobs/stats-territoires.sh"
+  "0 0 * * * $ROOT/src/tools/jobs/stats-daily-cras.sh"
 ]
 
