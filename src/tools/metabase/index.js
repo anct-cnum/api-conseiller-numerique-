@@ -122,6 +122,41 @@ execute(__filename, async ({ logger, db, Sentry }) => {
   addTomStMartin(listConseillersFinalisesStMartin, lignes, 'nombreConseillers');
   const conseillersFinalisesDepartement = ({ 'key': key, 'date': new Date(date), 'data': lignes });
 
+  //Nombre de conseillers en poste par département
+  const conseillersEnPoste = await db.collection('conseillers').find({
+    statut: { $eq: 'RECRUTE' },
+    structureId: { $ne: null },
+    dateFinFormation: { $lt: new Date() }
+  }).toArray();
+  let promisesConseillers = [];
+  lignes = [];
+  conseillersEnPoste?.forEach(conseiller => {
+    promisesConseillers.push(new Promise(async resolve => {
+      try {
+        const { codeDepartement, codeCom } = await db.collection('structures').findOne({ _id: conseiller.structureId });
+        if (lignes.findIndex(dep => dep.numeroDepartement === codeCom) !== -1) {
+          ++lignes[lignes.findIndex(dep => dep.numeroDepartement === codeCom)].nombreConseillersEnPoste;
+        } else if (lignes.findIndex(dep => dep.numeroDepartement === codeDepartement) !== -1) {
+          ++lignes[lignes.findIndex(dep => dep.numeroDepartement === codeDepartement)].nombreConseillersEnPoste;
+        } else if (codeCom === '978') {
+          addTomStMartin(1, lignes, 'nombreConseillersEnPoste');
+        } else {
+          lignes.push({
+            'numeroDepartement': codeDepartement,
+            'departement': departements.find(dep => String(dep.num_dep) === String(codeDepartement))?.dep_name,
+            'nombreConseillersEnPoste': 1
+          });
+        }
+      } catch (error) {
+        Sentry.captureException(error);
+        logger.error(error.message);
+      }
+      resolve();
+    }));
+  });
+  await Promise.all(promisesConseillers);
+  const conseillersEnPosteDepartement = ({ 'key': key, 'date': new Date(date), 'data': lignes });
+
   /* Nombre de mises en relation de candidats par département */
   const queryNombreCandidats = [
     { '$match': { 'conseillerObj.disponible': true, 'statut': { $nin: ['finalisee_non_disponible', 'recrutee', 'finalisee'] } } },
@@ -284,6 +319,7 @@ execute(__filename, async ({ logger, db, Sentry }) => {
     db.collection('stats_PostesValidesDepartement').insertOne(postesValidesDepartement);
     db.collection('stats_ConseillersRecrutesDepartement').insertOne(conseillersRecrutesDepartement);
     db.collection('stats_ConseillersFinalisesDepartement').insertOne(conseillersFinalisesDepartement);
+    db.collection('stats_ConseillersEnPosteDepartement').insertOne(conseillersEnPosteDepartement);
     db.collection('stats_Candidats').insertOne(candidats);
     db.collection('stats_StructuresCandidates').insertOne(structuresCandidates);
   } catch (error) {

@@ -58,6 +58,8 @@ module.exports = {
       db.collection('conseillers').createIndex({ 'userCreationError': 1 }),
       db.collection('conseillers').createIndex({ 'email': 1 }),
       db.collection('conseillers').createIndex({ 'estRecrute': 1 }),
+      db.collection('conseillers').createIndex({ 'dateFinFormation': 1 }),
+      db.collection('conseillers').createIndex({ 'structureId': 1 })
     ]);
   },
   cras: db => {
@@ -80,33 +82,45 @@ module.exports = {
   },
   stats_PostesValidesDepartement: db => {
     return Promise.all([
-      db.collection('stats_PostesValidesDepartement').createIndex({ 'date': 1 }, { unique: true })
+      db.collection('stats_PostesValidesDepartement').createIndex({ 'date': 1 }, { unique: true }),
+      db.collection('stats_PostesValidesDepartement').createIndex({ 'data.numeroDepartement': 1 })
     ]);
   },
   stats_ConseillersRecrutesDepartement: db => {
     return Promise.all([
-      db.collection('stats_ConseillersRecrutesDepartement').createIndex({ 'date': 1 }, { unique: true })
+      db.collection('stats_ConseillersRecrutesDepartement').createIndex({ 'date': 1 }, { unique: true }),
+      db.collection('stats_ConseillersRecrutesDepartement').createIndex({ 'data.numeroDepartement': 1 })
     ]);
   },
   stats_ConseillersFinalisesDepartement: db => {
     return Promise.all([
-      db.collection('stats_ConseillersFinalisesDepartement').createIndex({ 'date': 1 }, { unique: true })
+      db.collection('stats_ConseillersFinalisesDepartement').createIndex({ 'date': 1 }, { unique: true }),
+      db.collection('stats_ConseillersFinalisesDepartement').createIndex({ 'data.numeroDepartement': 1 })
+    ]);
+  },
+  stats_ConseillersEnPosteDepartement: db => {
+    return Promise.all([
+      db.collection('stats_ConseillersEnPosteDepartement').createIndex({ 'date': 1 }, { unique: true }),
+      db.collection('stats_ConseillersEnPosteDepartement').createIndex({ 'data.numeroDepartement': 1 })
     ]);
   },
   stats_Candidats: db => {
     return Promise.all([
-      db.collection('stats_Candidats').createIndex({ 'date': 1 }, { unique: true })
+      db.collection('stats_Candidats').createIndex({ 'date': 1 }, { unique: true }),
+      db.collection('stats_Candidats').createIndex({ 'data.numeroDepartement': 1 })
     ]);
   },
   stats_StructuresCandidates: db => {
     return Promise.all([
-      db.collection('stats_StructuresCandidates').createIndex({ 'date': 1 }, { unique: true })
+      db.collection('stats_StructuresCandidates').createIndex({ 'date': 1 }, { unique: true }),
+      db.collection('stats_StructuresCandidates').createIndex({ 'data.numeroDepartement': 1 })
     ]);
   },
   stats_StructuresValidees: db => {
     return Promise.all([
       db.collection('stats_StructuresValidees').createIndex({ 'idStructure': 1 }, { unique: true }),
       db.collection('stats_StructuresValidees').createIndex({ 'estGrandReseau': 1 }),
+      db.collection('stats_StructuresValidees').createIndex({ 'codeDepartement': 1 })
     ]);
   },
   stats_Territoires: db => {
