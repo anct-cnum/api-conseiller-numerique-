@@ -21,7 +21,7 @@
     "@feathersjs/errors": "4.5.11",
     "@feathersjs/express": "4.5.11",
     "@feathersjs/feathers": "4.5.11",
-    "@gouvfr-anct/lieux-de-mediation-numerique": "1.22.1",
+    "@gouvfr-anct/lieux-de-mediation-numerique": "2.0.1",
     "@sentry/node": "7.102.0",
     "@turf/circle": "6.5.0",
     "axios": "1.7.7",
