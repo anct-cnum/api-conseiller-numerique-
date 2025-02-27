@@ -23,7 +23,7 @@
     "@feathersjs/feathers": "4.5.11",
     "@gouvfr-anct/lieux-de-mediation-numerique": "1.22.1",
     "@sentry/node": "7.102.0",
-    "@turf/circle": "6.5.0",
+    "@turf/circle": "7.1.0",
     "axios": "1.7.7",
     "commander": "12.1.0",
     "compression": "1.7.4",
